@@ -6,26 +6,35 @@ function one() {
     const map = new Map()
     map.set('1', 1);
     const value = valueOfKey('a', map, sentences, "");
-    console.log(value);
-    
+    console.log("Value of a:", value);
 }
 function two() {
-    
+    const input = inputData.one;
+    const sentences = input.split("|");
+    const map = new Map()
+    map.set('1', 1);
+    let value = valueOfKey('a', map, sentences, "");
+    console.log("Value of a:", value);
+    console.log("clearing map..")
+    map.clear()
+    console.log("wrinting values into map..")
+    map.set('1', 1);
+    map.set('b', value)
+    value = valueOfKey('a', map, sentences, "");
+    console.log("Value of new a:", value);
+
 }
 
 function valueOfKey(key, map, sentences, spacer) {
     if (map.has(key)) {
-        console.log("Hab was in der Map gefunden!", key, map.get(key))
         return map.get(key);
     } 
     for (const sentence of sentences) {
         const parts = sentence.split(' -> ');
         if (parts[1] == key) {
             if (!Number.isInteger(parts[0]) && parts[0].length < 3 && parts[0] != 0) {
-                console.log("searching for e  ", parts[0], "  in  ", sentence);
                 let value = valueOfKey(parts[0], map, sentences, spacer);
                 map.set(key, value);
-                // console.log(sentence, value);
                 return value;
             } else if (parts[0].includes('OR')) {
                 const operants = parts[0].split(' OR ');
@@ -34,7 +43,6 @@ function valueOfKey(key, map, sentences, spacer) {
                 let value = value1 | value2;
                 map.set(key, value);
                 return value;
-                // TODO search for second operant and operate
             } else if (parts[0].includes('LSHIFT')) {
                 const operants = parts[0].split(' LSHIFT ');
                 let value = valueOfKey(operants[0], map, sentences, spacer);
@@ -61,7 +69,6 @@ function valueOfKey(key, map, sentences, spacer) {
                 map.set(key, value);
                 return value;
             } else {
-                console.log(sentence);
                 let value = parts[0]
                 map.set(key, value);
                 return value;
@@ -71,5 +78,5 @@ function valueOfKey(key, map, sentences, spacer) {
     return "ERROR - Key not found: " + key;
 }
 
-one();
+// one();
 two();
