@@ -1,12 +1,8 @@
-const inputData = require('./dayXXX-input.json');
+const inputData = require("./dayXXX-input.json");
 
-function one() {
-    
-}
+function one() {}
 
-function two() {
-    
-}
+function two() {}
 
 one();
 two();
